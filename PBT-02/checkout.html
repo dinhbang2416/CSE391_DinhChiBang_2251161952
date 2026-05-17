@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: cadetblue;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tfoot td {
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+
+        fieldset {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 5px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .radio-group {
+            margin-top: 10px;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .range-value {
+            margin-top: 8px;
+            font-weight: bold;
+            color: #007bff
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Thông tin đặt hàng</h1>
+        <!--Tìm kiếm sản phẩm-->
+        <fieldset>
+            <legend>Tìm kiếm</legend>
+            <label for="product-search">Nhập tên sản phẩm: </label>
+            <input type="text" id="product-search" list="product-list" placeholder="VD: Chuột gamming">
+            <datalist id="product-lít">
+                <option value="Bàn phím cơ"></option>
+                <option value="Chuột chơi game"></option>
+                <option value="Tai nghe bluetooh"></option>
+            </datalist>
+        </fieldset>
+        <h2>Giỏ hàng</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Bàn phím cơ</td>
+                    <td>1.000.000đ</td>
+                    <td>1</td>
+                    <td>1.000.000đ</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Chuột gaming</td>
+                    <td>650.000đ</td>
+                    <td>2</td>
+                    <td>1.300.000đ</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Tai nghe bluetooh</td>
+                    <td>900.000đ</td>
+                    <td>1</td>
+                    <td>900.000đ</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">Tổng cộng</td>
+                    <td>3.400.000đ</td>
+                </tr>
+            </tfoot>
+        </table>
+        <fieldset>
+            <legend>Điểm tích lũy khách hàng</legend>
+            <p>Bạn đã đạt 75/100 điểm thành viên VIP</p>
+            <div class="meter-box">
+                <meter value="75" min="0" max="100">75%</meter>
+            </div>
+        </fieldset>
+        <!--Form thanh toán-->
+        <form action="#" method="post">
+            <!--phần 2: Fieldset-->
+            <fieldset>
+                <legend>Thanh toán</legend>
+                <label>Phương thức thanh toán:</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="payment" value="bank"> Chuyển khoản
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="wallet"> Tiền mặt
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="cod"> COD
+                    </label>
+                </div>
+                <label for="coupon">Mã giảm giá:</label>
+                <input type="text" id="coupon" name="coupon" placeholder="SALE2026" pattern="SALE[0-9]{4}"
+                    title="Mã phải có dạng SALE + 4 chữ số">
+                <label for="note">Ghi chú</label>
+                <textarea id="note" name="note" rows="4" placeholder="Nhập ghi chú(nếu có)"></textarea>
+            </fieldset>
+            <fieldset>
+                <legend>Thông tin giao hàng</legend>
+                <label for="delivery-date">Ngày giao hàng mong muốn</label>
+                <input type="date" id="delivery-date" name="delivery-date" required>
+                <label for="time-slot">Khung giờ giao hàng</label>
+                <select id="time-slot" name="time-slot" required>
+                    <option value="">--Chọn khung giờ--</option>
+                    <option value="morning">Sáng 8-12h</option>
+                    <option value="afternoon">Chiều 13-17h</option>
+                    <option value="evening">Sáng 18-22h</option>
+                </select>
+                <label for="delivery-range">Thời gian giao hàng(số ngày):</label>
+                <input type="range" id="delivery-range" name="delivery-range" min="1" max="7" step="1" value="3">
+                <div class="range-value">
+                    <span id="range-output">3</span> ngày
+                </div>
+            </fieldset>
+            <button type="submit" aria-label="Xác nhận đơn hàng">Xác nhận</button>
+        </form>
+    </div>
+    <script>
+        //Thiết lập min = ngày mai
+        const dateInput = document.getElementById("delivery-date")
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const yyyy = tomorrow.getFullYear();
+        const mm = String(tomorrow.getMonth() + 1).padStart(2,'0');
+        const dd = String(tomorrow.getDate()).padStart(2,'0');
+        dateInput.min = `${yyyy} - ${mm} - ${dd}`;
+        //Hiển thị giá trị range\
+        const rangeInput = document.getElementById("delivery-range");
+        const rangeOutput = document.getElementById("range-output");
+        rangeInput.addEventListener("input", function(){
+            rangeOutput.textContent = this.value;
+        });
+    </script>
+</body>
+</html>

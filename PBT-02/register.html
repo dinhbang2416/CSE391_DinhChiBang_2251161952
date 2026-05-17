@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký Tài khoản E-Commerce</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        fieldset {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+            color: #333;
+        }
+        div.form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+        .btn-group {
+            text-align: right;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            margin-left: 10px;
+        }
+        button[type="reset"] {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <form action="#" method="POST">
+        <h2>Đăng ký Tài khoản</h2>
+
+        <!-- Fieldset 1: Thông tin cá nhân -->
+        <fieldset>
+            <legend>Thông tin cá nhân</legend>
+            
+            <div class="form-group">
+                <label for="fullname">Họ tên:</label>
+                <input type="text" id="fullname" name="fullname" required minlength="2" maxlength="50" placeholder="Nhập đầy đủ họ tên (từ 2-50 ký tự)">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="example@domain.com">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Số điện thoại:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Nhập số điện thoại 10 chữ số">
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Ngày sinh:</label>
+                <input type="date" id="dob" name="dob" placeholder="Chọn ngày sinh">
+            </div>
+        </fieldset>
+
+        <!-- Fieldset 2: Tài khoản -->
+        <fieldset>
+            <legend>Tài khoản</legend>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_]{3,20}$" placeholder="Ký tự thường, hoa, số hoặc _ (3-20 ký tự)">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" minlength="8" pattern="(?=.*[A-Z])(?=.*[0-9]).{8,}" placeholder="Tối thiểu 8 ký tự, ít nhất 1 chữ hoa + 1 số">
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Xác nhận password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" minlength="8" pattern="(?=.*[A-Z])(?=.*[0-9]).{8,}" placeholder="Nhập lại mật khẩu giống phía trên">
+            </div>
+        </fieldset>
+
+        <!-- Fieldset 3: Thông tin giao hàng -->
+        <fieldset>
+            <legend>Thông tin giao hàng</legend>
+
+            <div class="form-group">
+                <label for="city">Thành phố:</label>
+                <select id="city" name="city">
+                    <option value="">-- Chọn Thành phố --</option>
+                    <option value="HN">Hà Nội</option>
+                    <option value="HCM">TP. Hồ Chí Minh</option>
+                    <option value="DN">Đà Nẵng</option>
+                    <option value="HP">Hải Phòng</option>
+                    <option value="CT">Cần Thơ</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="district">Quận/Huyện:</label>
+                <select id="district" name="district">
+                    <option value="">-- Chọn Quận/Huyện --</option>
+                    <option value="Q1">Quận 1</option>
+                    <option value="QG">Quận Cầu Giấy</option>
+                    <option value="HK">Quận Hoàn Kiếm</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="address_detail">Địa chỉ chi tiết:</label>
+                <textarea id="address_detail" name="address_detail" rows="3" placeholder="Số nhà, tên đường, tòa nhà..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Giới tính:</label>
+                <div class="radio-group">
+                    <input type="radio" id="gender_male" name="gender" value="Nam">
+                    <label for="gender_male">Nam</label>
+                    
+                    <input type="radio" id="gender_female" name="gender" value="Nữ">
+                    <label for="gender_female">Nữ</label>
+                    
+                    <input type="radio" id="gender_other" name="gender" value="Khác">
+                    <label for="gender_other">Khác</label>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Checkbox & Button -->
+        <div class="form-group">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms" style="display: inline;">Tôi đồng ý với các điều khoản dịch vụ</label>
+        </div>
+
+        <div class="btn-group">
+            <button type="reset">Reset</button>
+            <button type="submit">Đăng ký</button>
+        </div>
+    </form>
+
+    <script>
+        // Tự động set thuộc tính max của ô input date là ngày hiện tại
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('dob').setAttribute('max', today);
+    </script>
+</body>
+</html>
