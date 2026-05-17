@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        h1{
+            color: aqua;/*Chọn màu cho thẻ h1*/
+        }
+        .price{
+            font-family: Arial;/*Chọn font arial class price*/
+        }
+        #app header{
+            background: blueviolet;
+            /*Chọn màu nền cho header*/
+            text-align: center;/*Căn giữa cho phần navigation*/
+        }
+        nav a:first-child{
+            border: 5px;/*Chọn viền 5 px bao quanh home*/
+            border: solid;
+        }
+        .product.featured h2{
+            font-size: large;/*Chọn kích cỡ lớn cho chữ Macbook Pro*/
+        }
+        article > p{
+            text-align: center;/*Căn giữa cho các văn bản trong article*/
+        }
+        a[href="/"]{
+            text-shadow: 10px;
+            /*Chọn hiệu ứng cho chữ home*/
+            color: black;/*Chữ home đổi màu đen*/
+        }
+        .top-bar.dark h1{
+            text-decoration: wavy;/*Chọn hiệu ứng cho chữ ShopTLU*/
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+    <header class="top-bar dark">
+        <h1>ShopTLU</h1>
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/products">Products</a>
+            <a href="/about">About</a>
+        </nav>
+    </header>
+    <main>
+        <article class="product">
+            <h2>iPhone 16</h2>
+            <p class="price">25.990.000đ</p>
+            <p>Mô tả sản phẩm...</p>
+        </article>
+        <article class="product featured">
+            <h2>MacBook Pro</h2>
+            <p class="price">45.990.000đ</p>
+            <p>Mô tả sản phẩm...</p>
+        </article>
+    </main>
+</div>
+</body>
+</html>

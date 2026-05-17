@@ -1,0 +1,33 @@
+p{
+    color: red;/* Specificity: 0,0,1 */
+}
+.text{
+    color: orange;/* Specificity: 0,1,0 */
+}
+p.text{
+    color: green;/*Specificity: 0-1-1 */
+}
+.text.highlight{
+    color: black;/*Specificity: 0-2-0 */
+}
+p.text.highlight{
+    color: blueviolet;/*Specificity: 0-2-1 */
+}
+#demo{
+    color: aqua;/* Specificity: 1,0,0 */
+}
+p#demo{
+    color: deeppink;/*Specificity: 1-0-1 */
+}
+
+#demo.highlight {
+  color: cyan;/*Specificity: 1-1-0 */
+}
+
+p#demo.highlight {
+  color: lime;/*Specificity: 1-1-1 */
+}
+
+p#demo.text.highlight {
+  color: purple;/*Specificity: 1-2-1 */
+}

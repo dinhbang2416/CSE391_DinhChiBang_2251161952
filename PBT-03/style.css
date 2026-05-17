@@ -1,0 +1,71 @@
+*{
+    box-sizing: border-box;
+}
+/*Element selector*/
+body{
+    font-family: Arial, sans-serif;
+    background-color: #dde2ea;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+/*ID selector*/
+#skill{
+    background: linear-gradient(to right, #ebeff6, #cad8f1);
+    color: rgb(7, 7, 7);
+    padding: 25px;
+    text-align: center;
+}
+/*descendant selector*/
+nav a{
+    text-decoration: none;
+    color: #0f0f0f;
+    margin: 0 15px;
+    font-weight: bold;
+}
+/*pseudo-class selector*/
+nav a:hover{
+    color: #6f00ff;
+    text-decoration: underline;
+}
+/*class selector*/
+.active{
+    background-color: #ffd700;
+    color: #000 !important;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+/*Table styling*/
+table{
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    /* text-align: center; */
+}
+/*Descendant selector*/
+table th, table td{
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+}
+/*Header row*/
+table th{
+    background-color: #333;
+    color: white;
+}
+/*zebra stripping*/
+tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+tr:hover{
+    background-color: #d6eaff;
+}
+/*footer*/
+footer{
+    background-color: #222;
+    color: #ddd;
+    text-align: left;
+    padding: 15px;
+    margin-top: 20px;
+}
