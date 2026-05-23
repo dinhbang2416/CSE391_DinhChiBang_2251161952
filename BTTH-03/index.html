@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sinh Viên</title>
+    <style>
+        #form-modal {
+            display: none; 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #333;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Trang Quản Lý Sinh Viên</h1>
+
+    <div>
+        <button id="btn-open-form">Thêm sinh viên mới</button>
+    </div>
+    
+    <div id="thong-ke">
+        <p>Tổng số sinh viên: <span id="tong-sv">0</span></p>
+        <p>Điểm trung bình lớp: <span id="dtb-lop">0</span></p>
+    </div>
+
+    <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>Mã SV</th>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Lớp</th>
+                <th>ĐTB</th>
+                <th>Email</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="danh-sach-sv">
+            </tbody>
+    </table>
+
+    <div id="form-modal" style="margin-top: 30px; padding: 15px; border: 1px solid #000; width: 300px;">
+        <h3 id="form-title">Thêm Sinh Viên</h3>
+        <form id="student-form">
+            <input type="hidden" id="form-mode" value="create">
+            <input type="hidden" id="edit-id" value="">
+
+            <div><label>Mã SV:</label><br><input type="text" id="txt-ma-sv" required></div>
+            <div><label>Họ và tên:</label><br><input type="text" id="txt-ten" required></div>
+            <div><label>Ngày sinh:</label><br><input type="date" id="txt-ngaysinh" required></div>
+            <div><label>Lớp học:</label><br><input type="text" id="txt-lop" required></div>
+            <div><label>Điểm trung bình:</label><br><input type="number" id="txt-dtb" step="0.1" min="0" max="10" required></div>
+            <div><label>Email:</label><br><input type="email" id="txt-email" required></div>
+            <br>
+            <button type="submit" id="btn-save">Lưu</button>
+            <button type="button" id="btn-close-form">Hủy/Đóng</button>
+        </form>
+    </div>
+
+</body>
+
+<script>
+    // --- 1. DOM ELEMENTS ---
+    const tbodyDanhSach = document.getElementById('danh-sach-sv');
+    const txtTongSV = document.getElementById('tong-sv');
+    const txtDtbLop = document.getElementById('dtb-lop');
+    const txtMaSV = document.getElementById('txt-ma-sv');
+    const txtTen = document.getElementById('txt-ten');
+    const txtNgaySinh = document.getElementById('txt-ngaysinh');
+    const txtLop = document.getElementById('txt-lop');
+    const txtDtb = document.getElementById('txt-dtb');
+    const txtEmail = document.getElementById('txt-email');
+    const btnOpenForm = document.getElementById('btn-open-form');
+    const btnCloseForm = document.getElementById('btn-close-form');
+    const formModal = document.getElementById('form-modal');
+    const studentForm = document.getElementById('student-form');
+    const formMode = document.getElementById('form-mode');
+    const editId = document.getElementById('edit-id');
+
+    // --- 2. DATA INITIALIZATION (Đọc từ localStorage) ---
+    let danhSachSinhVien = JSON.parse(localStorage.getItem('list_student')) || [
+        { maSV: "SV001", hoTen: "Nguyễn Văn A", ngaySinh: "2003-01-01", lop: "CNTT1", dtb: 8.5, email: "anguyen@gmail.com" },
+        { maSV: "SV002", hoTen: "Trần Thị B", ngaySinh: "2003-05-12", lop: "CNTT2", dtb: 7.2, email: "btran@gmail.com" }
+    ];
+
+    // --- 3. LOGIC FUNCTIONS (Tách hàm theo yêu cầu bài học) ---
+
+    // Hàm 1: Lưu dữ liệu xuống máy
+    function saveStudents() {
+        localStorage.setItem('list_student', JSON.stringify(danhSachSinhVien));
+    }
+
+    // Hàm 2: Cập nhật số liệu thống kê
+    function updateStatistics() {
+        const tongSV = danhSachSinhVien.length;
+        txtTongSV.innerText = tongSV;
+
+        if (tongSV === 0) {
+            txtDtbLop.innerText = "0";
+        } else {
+            let tongDiem = 0;
+            danhSachSinhVien.forEach(sv => tongDiem += sv.dtb);
+            txtDtbLop.innerText = (tongDiem / tongSV).toFixed(2);
+        }
+    }
+
+    // Hàm 3: Làm sạch và đóng form
+    function resetForm() {
+        studentForm.reset();
+        formModal.style.display = 'none';
+    }
+
+    // Hàm 4: Vẽ mảng dữ liệu ra bảng HTML
+    function renderStudents() {
+        tbodyDanhSach.innerHTML = "";
+
+        // Nếu không có sinh viên nào, hiển thị dòng thông báo trống
+        if (danhSachSinhVien.length === 0) {
+            tbodyDanhSach.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:10px;">Danh sách trống</td></tr>`;
+            updateStatistics();
+            saveStudents();
+            return;
+        }
+        
+        danhSachSinhVien.forEach(function(sv, index) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${sv.maSV}</td>
+                <td>${sv.hoTen}</td>
+                <td>${sv.ngaySinh}</td>
+                <td>${sv.lop}</td>
+                <td>${sv.dtb}</td>
+                <td>${sv.email}</td>
+                <td>
+                    <button onclick="chuanBiSua(${index})">Sửa</button>
+                    <button onclick="xoaSinhVien(${index})">Xóa</button>
+                </td>
+            `;
+            tbodyDanhSach.appendChild(row);
+        });
+
+        updateStatistics(); // Cập nhật thống kê sau khi vẽ
+        saveStudents();     // Lưu trạng thái mới nhất
+    }
+
+    // --- 4. EVENT LISTENERS & CHỨC NĂNG ---
+
+    // Chạy lần đầu tiên khi tải trang
+    renderStudents();
+
+    // Mở form (Thêm mới)
+    btnOpenForm.addEventListener('click', function() {
+        formMode.value = "create"; 
+        document.getElementById('form-title').innerText = "Thêm Sinh Viên"; 
+        resetForm();
+        formModal.style.display = 'block';
+    });
+
+    // Đóng form
+    btnCloseForm.addEventListener('click', resetForm);
+
+    // Bấm nút Lưu (Submit form)
+    studentForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const thongTinSinhVien = {
+            maSV: txtMaSV.value,
+            hoTen: txtTen.value,
+            ngaySinh: txtNgaySinh.value,
+            lop: txtLop.value,
+            dtb: parseFloat(txtDtb.value),
+            email: txtEmail.value
+        };
+
+        if (formMode.value === "create") {
+            danhSachSinhVien.push(thongTinSinhVien);
+        } else if (formMode.value === "edit") {
+            danhSachSinhVien[editId.value] = thongTinSinhVien;
+        }
+
+        renderStudents();   
+        resetForm(); 
+    });
+
+    // Xóa sinh viên
+    function xoaSinhVien(index) {
+        if (confirm("Bạn có chắc chắn muốn xóa sinh viên này không?")) {
+            danhSachSinhVien.splice(index, 1);
+            renderStudents();
+        }
+    }
+
+    // Sửa sinh viên (Nạp dữ liệu cũ lên form)
+    function chuanBiSua(index) {
+        const sv = danhSachSinhVien[index];
+
+        txtMaSV.value = sv.maSV;
+        txtTen.value = sv.hoTen;
+        txtNgaySinh.value = sv.ngaySinh;
+        txtLop.value = sv.lop;
+        txtDtb.value = sv.dtb;
+        txtEmail.value = sv.email;
+
+        formMode.value = "edit";
+        editId.value = index;
+
+        document.getElementById('form-title').innerText = "Chỉnh Sửa Sinh Viên";
+        formModal.style.display = 'block';
+    }
+</script>
+</html>

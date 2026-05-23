@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Công Việc Cá Nhân</title>
+    <style>
+        /* CSS Popup Form */
+        #form-popup {
+            display: none; 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #333;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
+            z-index: 1000;
+            width: 320px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ứng Dụng Quản Lý Công Việc</h1>
+
+    <div id="vung-thong-bao" style="color: green; font-weight: bold; margin-bottom: 10px; height: 20px;"></div>
+
+    <div>
+        <button id="btn-mo-form">Thêm công việc mới</button>
+    </div>
+    
+    <div id="vung-thong-ke" style="margin-top: 15px; padding: 10px; background-color: #f0f0f0; width: fit-content; border-radius: 5px;">
+        <strong>Thống kê công việc:</strong>
+        <p style="margin: 5px 0;">• Tổng số công việc: <span id="tong-cv">0</span></p>
+        <p style="margin: 5px 0;">• Đã hoàn thành: <span id="cv-hoan-thanh" style="color: green;">0</span></p>
+        <p style="margin: 5px 0;">• Chưa hoàn thành: <span id="cv-chua-hoan-thanh" style="color: red;">0</span></p>
+    </div>
+
+    <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+        <thead>
+            <tr>
+                <th style="width: 80px;">Trạng thái</th>
+                <th>Tiêu đề công việc</th>
+                <th>Mô tả ngắn</th>
+                <th>Hạn hoàn thành</th>
+                <th>Mức ưu tiên</th>
+                <th style="width: 120px;">Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="danh-sach-cv">
+            </tbody>
+    </table>
+
+    <div id="form-popup">
+        <h3 id="form-title">Thêm Công Việc</h3>
+        <form id="job-form">
+            <input type="hidden" id="form-mode" value="create">
+            <input type="hidden" id="edit-id" value="">
+
+            <div>
+                <label>Tiêu đề:</label><br>
+                <input type="text" id="txt-tieude" style="width: 95%;" required>
+            </div>
+            <br>
+            <div>
+                <label>Mô tả ngắn:</label><br>
+                <textarea id="txt-mota" rows="3" style="width: 95%;" required></textarea>
+            </div>
+            <br>
+            <div>
+                <label>Hạn hoàn thành:</label><br>
+                <input type="date" id="txt-han" style="width: 95%;" required>
+            </div>
+            <br>
+            <div>
+                <label>Mức ưu tiên:</label><br>
+                <select id="sel-uutien" style="width: 98%;">
+                    <option value="Thấp">Thấp</option>
+                    <option value="Trung bình" selected>Trung bình</option>
+                    <option value="Cao">Cao</option>
+                </select>
+            </div>
+            <br>
+            <button type="submit" id="btn-luu">Lưu Công Việc</button>
+            <button type="button" id="btn-dong-form">Hủy/Đóng</button>
+        </form>
+    </div>
+
+</body>
+
+<script>
+    // --- 1. DOM ELEMENTS ---
+    const tbodyDanhSach = document.getElementById('danh-sach-cv');
+    const txtVungThongBao = document.getElementById('vung-thong-bao');
+    const txtTongCV = document.getElementById('tong-cv');
+    const txtCvHoanThanh = document.getElementById('cv-hoan-thanh');
+    const txtCvChuaHoanThanh = document.getElementById('cv-chua-hoan-thanh');
+    
+    const txtTieuDe = document.getElementById('txt-tieude');
+    const txtMoTa = document.getElementById('txt-mota');
+    const txtHan = document.getElementById('txt-han');
+    const selUuTien = document.getElementById('sel-uutien');
+    
+    const btnMoForm = document.getElementById('btn-mo-form');
+    const btnDongForm = document.getElementById('btn-dong-form');
+    const formPopup = document.getElementById('form-popup');
+    const jobForm = document.getElementById('job-form');
+    const formMode = document.getElementById('form-mode');
+    const editId = document.getElementById('edit-id');
+
+    // --- 2. KHỞI TẠO MẢNG DỮ LIỆU THÔNG MINH ---
+    let localData = JSON.parse(localStorage.getItem('list_task'));
+    
+    // Nếu trong localStorage không tồn tại hoặc mảng rỗng -> Nạp dữ liệu mặc định ban đầu
+    if (!localData || localData.length === 0) {
+        danhSachCongViec = [
+            { tieuDe: "Làm bài tập Javascript", moTa: "Hoàn thành bài 1 quản lý sinh viên", han: "2026-05-25", uuTien: "Cao", trangThai: true },
+            { tieuDe: "Mua đồ ăn tối", moTa: "Mua rau và thịt gà", han: "2026-05-23", uuTien: "Trung bình", trangThai: false }
+        ];
+    } else {
+        danhSachCongViec = localData;
+    }
+
+    // --- 3. LOGIC FUNCTIONS ---
+
+    function saveTasks() {
+        localStorage.setItem('list_task', JSON.stringify(danhSachCongViec));
+    }
+
+    function showMessage(msg) {
+        txtVungThongBao.innerText = msg;
+        setTimeout(function() {
+            txtVungThongBao.innerText = "";
+        }, 3000);
+    }
+
+    function updateTaskSummary() {
+        const tongCV = danhSachCongViec.length;
+        let hoanThanh = 0;
+
+        danhSachCongViec.forEach(function(cv) {
+            if (cv.trangThai === true) {
+                hoanThanh++;
+            }
+        });
+
+        txtTongCV.innerText = tongCV;
+        txtCvHoanThanh.innerText = hoanThanh;
+        txtCvChuaHoanThanh.innerText = tongCV - hoanThanh;
+    }
+
+    function resetForm() {
+        jobForm.reset();
+        formPopup.style.display = 'none';
+    }
+
+    function renderTasks() {
+        tbodyDanhSach.innerHTML = "";
+
+        if (danhSachCongViec.length === 0) {
+            tbodyDanhSach.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 15px; color: gray;">Hiện tại chưa có công việc nào cần làm.</td></tr>`;
+            updateTaskSummary();
+            saveTasks();
+            return;
+        }
+
+        danhSachCongViec.forEach(function(cv, index) {
+            const row = document.createElement('tr');
+            const tieuDeStyle = cv.trangThai ? `style="text-decoration: line-through; color: gray;"` : "";
+            const isChecked = cv.trangThai ? "checked" : "";
+
+            row.innerHTML = `
+                <td style="text-align: center;">
+                    <input type="checkbox" ${isChecked} onchange="doiTrangThai(${index})">
+                </td>
+                <td><span ${tieuDeStyle}>${cv.tieuDe}</span></td>
+                <td>${cv.moTa}</td>
+                <td>${cv.han}</td>
+                <td>${cv.uuTien}</td>
+                <td>
+                    <button onclick="chuanBiSua(${index})">Sửa</button>
+                    <button onclick="xoaCongViec(${index})">Xóa</button>
+                </td>
+            `;
+            tbodyDanhSach.appendChild(row);
+        });
+
+        updateTaskSummary();
+        saveTasks();
+    }
+
+    // --- 4. EVENT LISTENERS ---
+
+    renderTasks();
+
+    btnMoForm.addEventListener('click', function() {
+        formMode.value = "create";
+        document.getElementById('form-title').innerText = "Thêm Công Việc";
+        resetForm();
+        formPopup.style.display = 'block';
+    });
+
+    btnDongForm.addEventListener('click', resetForm);
+
+    jobForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const indexCanXuly = parseInt(editId.value);
+
+        const thongTinCongViec = {
+            tieuDe: txtTieuDe.value,
+            moTa: txtMoTa.value,
+            han: txtHan.value,
+            uuTien: selUuTien.value,
+            trangThai: formMode.value === "create" ? false : danhSachCongViec[indexCanXuly].trangThai
+        };
+
+        if (formMode.value === "create") {
+            danhSachCongViec.push(thongTinCongViec);
+            showMessage("Thêm mới công việc thành công!");
+        } else if (formMode.value === "edit") {
+            danhSachCongViec[indexCanXuly] = thongTinCongViec;
+            showMessage("Cập nhật công việc thành công!");
+        }
+
+        renderTasks();
+        resetForm();
+    });
+
+    function chuanBiSua(index) {
+        const cv = danhSachCongViec[index];
+
+        txtTieuDe.value = cv.tieuDe;
+        txtMoTa.value = cv.moTa;
+        txtHan.value = cv.han;
+        selUuTien.value = cv.uuTien;
+
+        formMode.value = "edit";
+        editId.value = index;
+
+        document.getElementById('form-title').innerText = "Chỉnh Sửa Công Việc";
+        formPopup.style.display = 'block';
+    }
+
+    function xoaCongViec(index) {
+        if (confirm("Bạn có chắc chắn muốn xóa công việc này không?")) {
+            danhSachCongViec.splice(index, 1);
+            renderTasks();
+            showMessage("Xóa công việc thành công!");
+        }
+    }
+
+    function doiTrangThai(index) {
+        danhSachCongViec[index].trangThai = !danhSachCongViec[index].trangThai;
+        renderTasks();
+        showMessage("Đã cập nhật trạng thái công việc!");
+    }
+</script>
+</html>
