@@ -1,0 +1,222 @@
+/* =========================
+RESET
+========================== */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.5;
+}
+img{
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+ul{
+    list-style: none;
+}
+/* =========================
+MOBILE FIRST
+========================== */
+.container{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+/* ===== HEADER ===== */
+header{
+    background: #111827;
+    color: white;
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.header-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.hambuger{
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: block;
+}
+nav{
+    display: none;
+}
+/* ===== MAIN ===== */
+.main-layout{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+/* ===== SIDEBAR ===== */
+.sidebar{
+    display: none;
+}
+/* ===== PRODUCT GRID ===== */
+.products{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+.product-card{
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.product-card:hover{
+    transform: translateY(-5px);
+}
+.product-content{
+    padding: 16px;
+}
+.product-title{
+    font-size: 1rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+.product-price{
+    color: #dc2626;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+.btn{
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+.btn:hover{
+    background-image: #1d4ed8;
+}
+ /* ===== ADS ===== */
+ .ads-bar{
+    display: none;
+}
+ /* ===== FOOTER ===== */
+footer{
+    margin-top: auto;
+    background: #111827;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+ /* =========================
+       TABLET >= 768px
+    ========================== */
+@media(min-width: 768px){
+    body{
+        font-size: 16px;
+    }
+    .hambuger{
+        display: none;
+    }
+    nav{
+        display: block;
+    }
+    nav ul{
+        display: flex;
+        gap: 20px;
+    }
+    nav a{
+        color: white;
+        font-weight: 500;
+    }
+    /* Sidebar ngang */
+    .sidebar{
+        display: flex;
+        background: white;
+        padding: 16px;
+        border-radius: 10px;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .filter-item{
+        padding: 10px 14px;
+        background: #e5e7eb;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .products{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .product-title{
+        font-size: 1.1rem;
+    }
+    .product-price{
+        font-size: 1.2rem;
+    }
+}
+/* =========================
+   DESKTOP >= 1024px
+========================== */
+@media (min-width: 1024px) {
+
+  body {
+    font-size: 18px;
+  }
+
+  .main-layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 220px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* Sidebar dọc */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 90px;
+  }
+
+  .products {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(160px, 1fr));
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ads-bar {
+    display: block;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: sticky;
+    top: 90px;
+  }
+
+  .ad-box {
+    background: #dbeafe;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+

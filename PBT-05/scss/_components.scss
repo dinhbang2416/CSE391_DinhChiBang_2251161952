@@ -1,0 +1,259 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-primary;
+  background: $light-bg;
+  color: $text-color;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background: $secondary-color;
+  color: $white;
+  padding: $spacing-md 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .hambuger {
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: block;
+  }
+
+  nav {
+    display: none;
+  }
+}
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.sidebar {
+  display: none;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* =====================
+   NESTING EXAMPLE
+===================== */
+
+.product-card {
+  background: $white;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  @include card-shadow;
+
+  transition: 0.3s ease;
+
+  .product-content {
+    padding: $spacing-md;
+  }
+
+  .product-title {
+    font-size: 1rem;
+    margin-bottom: $spacing-sm;
+    font-weight: bold;
+  }
+
+  .product-price {
+    color: $danger-color;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &.featured {
+    border: 2px solid gold;
+  }
+}
+
+.btn {
+  display: inline-block;
+  background: $primary-color;
+  color: $white;
+  padding: 10px 14px;
+  border-radius: $radius-sm;
+  font-size: 0.9rem;
+  transition: 0.3s;
+
+  &:hover {
+    background: #1d4ed8;
+  }
+}
+
+.ads-bar {
+  display: none;
+}
+
+footer {
+  margin-top: auto;
+  background: $secondary-color;
+  color: $white;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/* =====================
+   TABLET
+===================== */
+
+@include respond-to(tablet) {
+
+  body {
+    font-size: 16px;
+  }
+
+  header {
+
+    .hambuger {
+      display: none;
+    }
+
+    nav {
+      display: block;
+
+      ul {
+        display: flex;
+        gap: 20px;
+      }
+
+      a {
+        color: $white;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .sidebar {
+    display: flex;
+    background: $white;
+    padding: $spacing-md;
+    border-radius: $radius-md;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .filter-item {
+    padding: 10px 14px;
+    background: $gray-light;
+    border-radius: $radius-sm;
+    cursor: pointer;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-card {
+
+    .product-title {
+      font-size: 1.1rem;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+/* =====================
+   DESKTOP
+===================== */
+
+@include respond-to(desktop) {
+
+  body {
+    font-size: 18px;
+  }
+
+  .main-layout {
+    grid-template-columns: 220px minmax(0, 1fr) 220px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 90px;
+  }
+
+  .products {
+    grid-template-columns: repeat(4, minmax(160px, 1fr));
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ads-bar {
+    display: block;
+    background: $white;
+    padding: 20px;
+    border-radius: $radius-md;
+    position: sticky;
+    top: 90px;
+
+    .ad-box {
+      @include flex-center;
+
+      background: $ad-bg;
+      padding: 20px;
+      border-radius: $radius-md;
+      margin-bottom: $spacing-md;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+}
