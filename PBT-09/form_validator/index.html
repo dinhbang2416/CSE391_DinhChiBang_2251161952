@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Đăng ký tài khoản</h1>
+        <form id="registerForm">
+            <div class="field">
+                <label>Tên</label>
+                <input type="text" id="name">
+                <span id="nameStatus"></span>
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="email" id="email">
+                <small id="emailError"></small>
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" id="password">
+                <div class="strength-bar">
+                    <div id="strengthFill"></div>
+                </div>
+                <small id="strengthText"></small>
+            </div>
+            <div class="field">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword">
+                <small id="confirmError"></small>
+            </div>
+            <div class="field">
+                <label>Phone</label>
+                <input type="text" id="phone">
+                <small id="phoneError"></small>
+            </div>
+            <button id="submitBtn" disabled>
+                Đăng ký
+            </button>
+        </form>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Đăng ký thành công!</h2>
+            <div id="userInfo"></div>
+            <button id="closeModal">
+                Đóng
+            </button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

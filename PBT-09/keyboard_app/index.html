@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Navigation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <button id="openPalette" aria-label="Mở command palette">
+            Ctrl + K
+        </button>
+    </header>
+    <main>
+        <div class="gallery">
+            <img id="mainImage" alt="Gallery image">
+            <div class="controls">
+                <button id="prevBtn" aria-label="Ảnh trước">
+                    ←
+                </button>
+                <button id="nextBtn" aria-label="Ảnh tiếp theo">
+                    →
+                </button>
+                <button id="playBtn" aria-label="Play slideshow">
+                    Play
+                </button>
+            </div>
+        </div>
+    </main>
+    <div id="paletteOverlay" class="overlay hidden">
+        <div class="palette">
+            <input id="commandInput" type="text" placeholder="Nhập command..." aria-label="Command search">
+            <ul id="commandList"></ul>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
