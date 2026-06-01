@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>User Directory (CRUD)</title>
+</head>
+<body>
+    <h2>Quản lý Người dùng (CRUD)</h2>
+
+    <input type="text" id="search-input" placeholder="Tìm theo tên hoặc email...">
+    <hr>
+
+    <h3 id="form-title">Thêm thành viên</h3>
+    <form id="user-form">
+        <input type="hidden" id="user-id">
+        <input type="text" id="user-name" placeholder="Họ tên" required> <br><br>
+        <input type="email" id="user-email" placeholder="Email" required> <br><br>
+        <button type="submit" id="submit-btn">Lưu</button>
+        <button type="button" id="cancel-btn" style="display:none;">Hủy</button>
+    </form>
+
+    <hr>
+
+    <div id="status-message" style="font-weight: bold;"></div>
+
+    <h3>Danh sách thành viên</h3>
+    <div id="loading-placeholder"> Đang tải danh sách ...</div>
+    
+    <table border="1" cellpadding="5" cellspacing="0" id="users-table" style="display:none; width:100%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="users-body"></tbody>
+    </table>
+
+    <script src="app.js"></script>
+</body>
+</html>

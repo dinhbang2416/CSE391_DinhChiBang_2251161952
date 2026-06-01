@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+</head>
+<body>
+    <h2>Ứng dụng Thời tiết</h2>
+    
+    <input type="text" id="city-input" placeholder="Nhập tên thành phố (e.g. Hanoi)">
+    <button id="search-btn">Tìm</button>
+
+    <div>
+        <p>Lịch sử tìm kiếm (tối đa 5):</p>
+        <div id="history-list"></div>
+    </div>
+
+    <hr>
+
+    <div id="loading-state" style="display: none;">⏳ Đang tải dữ liệu thời tiết...</div>
+    <div id="error-state" style="display: none; color: red;"></div>
+    <div id="success-state" style="display: none;">
+        <h3 id="weather-city"></h3>
+        <p>Nhiệt độ: <span id="weather-temp"></span>°C</p>
+        <p>Độ ẩm: <span id="weather-humidity"></span>%</p>
+        <p>Trạng thái: <span id="weather-desc"></span></p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Multi-API Dashboard</title>
+</head>
+<body>
+    <h2>Bảng điều khiển đa dữ liệu (Dashboard)</h2>
+    <button id="refresh-btn">🔄 Làm mới tất cả (Refresh All)</button>
+    
+    <p id="total-time" style="font-weight: bold;"></p>
+    <div id="global-loading">⏳ Đang khởi tạo và tải toàn bộ Widget...</div>
+
+    <hr>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <div border="1" style="border: 1px solid black; padding: 15px; width: 250px;">
+            <h3>⛅ Thời tiết Hà Nội</h3>
+            <div id="widget-0-load">Đang tải...</div>
+            <div id="widget-0-error" style="color: red; display: none;"></div>
+            <div id="widget-0-content"></div>
+        </div>
+
+        <div border="1" style="border: 1px solid black; padding: 15px; width: 250px;">
+            <h3>🇻🇳 Thông tin Quốc gia</h3>
+            <div id="widget-1-load">Đang tải...</div>
+            <div id="widget-1-error" style="color: red; display: none;"></div>
+            <div id="widget-1-content"></div>
+        </div>
+
+        <div border="1" style="border: 1px solid black; padding: 15px; width: 250px;">
+            <h3>🐶 Thú cưng ngẫu nhiên</h3>
+            <div id="widget-2-load">Đang tải...</div>
+            <div id="widget-2-error" style="color: red; display: none;"></div>
+            <div id="widget-2-content"></div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

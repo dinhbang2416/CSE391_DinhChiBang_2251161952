@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Infinite Scroll Gallery</title>
+    <style>
+        /* Responsive Grid cơ bản không dùng framework */
+        .grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+        }
+        @media (min-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1000px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #eee; /* Nền giả khi chưa load ảnh */
+        }
+
+        /* Modal Lightbox thô sơ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            text-align: center;
+            z-index: 1000;
+        }
+        .modal img { max-width: 90%; max-height: 80%; margin-top: 5%; }
+        .modal-close { color: white; font-size: 30px; cursor: pointer; position: absolute; right: 20px; top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Thư viện ảnh Infinite Scroll</h2>
+
+    <div id="gallery-grid" class="grid"></div>
+
+    <div id="load-trigger" style="text-align: center; padding: 20px; font-weight: bold;">
+        ⏳ Đang tải thêm ảnh...
+    </div>
+
+    <div id="lightbox" class="modal">
+        <span class="modal-close" id="close-modal">&times;</span>
+        <img id="lightbox-img" src="" alt="Large view">
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
